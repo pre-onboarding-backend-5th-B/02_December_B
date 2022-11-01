@@ -11,6 +11,10 @@ djangorestframework = "^3.14.0"
 django-dotenv = "^1.4.2"
 mysqlclient = "^2.1.1"
 drf-yasg = "^1.21.4"
+pandas = "^1.5.1"
+xlrd = "^2.0.1"
+openpyxl = "^3.0.10"
+django-crontab = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.10.0"
