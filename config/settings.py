@@ -94,3 +94,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CRONJOBS = [
+    ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {},
+     f'>> {BASE_DIR}/log/insert_company 2>&1'),
+    ('10 0 * * *', 'django.core.management.call_command', ['insert_asset'], {},
+     f'>> {BASE_DIR}/log/insert_asset 2>&1'),
+    ('20 0 * * *', 'django.core.management.call_command', ['update_investment'], {},
+     f'>> {BASE_DIR}/log/update_investment 2>&1'),
+]
