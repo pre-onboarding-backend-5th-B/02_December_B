@@ -27,7 +27,7 @@ def isinstance_namedtuple(obj) -> bool:
 class Command(BaseCommand):
     """
     account_assets_info.xlsx 를 읽어 들여서
-    Acoount, StockBroker, StockCompany, Portfolio, PortfolioLog 에 insert 한다.
+    Account, StockBroker, StockCompany, Portfolio, PortfolioLog 에 insert 한다.
     """
 
     def add_arguments(self, parser):
