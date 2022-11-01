@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     # third-party
     "rest_framework",
     "drf_yasg",
+    'django_crontab',
     # app
     'account',
     'company',
