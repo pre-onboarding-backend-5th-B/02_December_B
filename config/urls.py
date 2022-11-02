@@ -35,7 +35,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accoount/', include('account.urls')),
-    path('order/', include('order.urls')),
+    path('transfer/', include('transfer.urls')),
     path('company/', include('company.urls')),
     path('portfolio/', include('portfolio.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

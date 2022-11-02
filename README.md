@@ -127,15 +127,13 @@
 
 </details>
 <details>
-    <summary> <h3> 주문내역(Order) </summary>
+    <summary> <h3> 송금내역(Transfer) </summary>
 
 - **계좌_id(fk)**
-- **투자회사_id(fk)**
-- 매수 가격
-- 매수 주식 수
-- ~~상태(status - true 입금까지 완료, false 완료되지 않은 거) → 만약 주문이 실패하면 삭제 or status updated_at~~
-- 주문한 시간
-- ~~updated_at~~
+- 송금액
+- 상태
+  - 송금상태를 뜻한다. `P`는 Pending `S`는 송금이 완료된 상태
+- 송금 시간
 
 </details>
 
