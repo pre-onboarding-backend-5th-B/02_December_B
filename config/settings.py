@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     # app
     'account',
     'company',
-    'order',
+    'transfer',
     'portfolio',
     'batch',
 ]
