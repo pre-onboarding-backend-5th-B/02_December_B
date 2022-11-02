@@ -28,19 +28,46 @@
 - update_investment: account_basic_info_set.xlsx 파일을 읽어들여 Account Model에 계좌번호로 투자원금을 update 함
 
 ### 스케쥴링
-
-```script
+- `django-crontab` 을 이용하여 스케쥴링을 함
+- cron 명령어
+  - **cron 추가**
+  ```shell
+  (env)$project_dir>python manage.py crontab add  # cron 추가
+  
+  adding cronjob: ... -> ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {}, '>> /$PROJECT_DIR/log/insert_company 2>&1')
+  adding cronjob: ... -> ('10 0 * * *', 'django.core.management.call_command', ['insert_asset'], {}, '>> /$PROJECT_DIR/log/insert_asset 2>&1')
+  adding cronjob: ... -> ('20 0 * * *', 'django.core.management.call_command', ['update_investment'], {}, '>> /$PROJECT_DIR/log/update_investment 2>&1')
+  ```
+  - **cron 제거**
+  ```shell
+  (env)$project_dir>python manage.py crontab remove  # cron 삭제
+  
+  removing cronjob: ... -> ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {}, '>> /$PROJECT_DIR/log/insert_company 2>&1')
+  removing cronjob: ... -> ('10 0 * * *', 'django.core.management.call_command', ['insert_asset'], {}, '>> /$PROJECT_DIR/log/insert_asset 2>&1')
+  removing cronjob: ... -> ('20 0 * * *', 'django.core.management.call_command', ['update_investment'], {}, '>> /$PROJECT_DIR/log/update_investment 2>&1')
+  ```
+  - **cron 보기**
+  ```shell
+  (env)$project_dir>python manage.py crontab remove  # cron 삭제
+  Currently active jobs in crontab:
+  ... -> ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {}, '>> /$PROJECT_DIR/log/insert_company 2>&1')
+  ... -> ('10 0 * * *', 'django.core.management.call_command', ['insert_asset'], {}, '>> /$PROJECT_DIR/log/insert_asset 2>&1')
+  ... -> ('20 0 * * *', 'django.core.management.call_command', ['update_investment'], {}, '>> /$PROJECT_DIR/log/update_investment 2>&1')
+  ```
+  
+- 스케쥴 시간대
+```shell
  0 0 * * * insert_company      # 매일 자정마다 insert_company 을 실행함
  10 0 * * * insert_asset       # 매일 00시 10분 마다 insert_asset 실행 함
  20 0 * * * update_investment  # 매일 00시 20분 마다 update_investment 을 실행 함 
 ```
 
-### 명령어
+### batch 명령어
 
-```script
-python manage.py insert_company
-python manage.py insert_asset
-python manage.py insert_investment
+```shell
+(env)$project_dir>python manage.py insert_company
+(env)$project_dir>python manage.py insert_asset
+(env)$project_dir>python manage.py insert_investment
 ```
 
 <details>
