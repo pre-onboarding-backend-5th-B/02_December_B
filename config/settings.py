@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'company',
     'order',
     'portfolio',
+    'batch',
 ]
 
 MIDDLEWARE = [
