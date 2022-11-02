@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from django.core.management import BaseCommand
 
+from batch.utils.read_xlsx import read_xlsx
 from company.models import StockCompany
 from config.settings import BASE_DIR
 
@@ -21,10 +22,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        file_path = os.path.join(BASE_DIR, 'res', 'files', 'asset_group_info_set.xlsx')
-        df = pd.read_excel(file_path)
-        for row in df.itertuples():
-            row_dict = row._asdict()
+        for row_dict in read_xlsx('asset_group_info_set.xlsx'):
             di = {
                 'name': row_dict.get('종목명'),
                 'isin': row_dict.get('ISIN'),

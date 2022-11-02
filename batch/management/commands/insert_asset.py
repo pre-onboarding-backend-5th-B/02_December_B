@@ -1,13 +1,11 @@
 import logging
-import os
 from collections import namedtuple
 
-import pandas as pd
 from django.core.management import BaseCommand
 
 from account.models import Account
+from batch.utils.read_xlsx import read_xlsx
 from company.models import StockBroker, StockCompany
-from config.settings import BASE_DIR
 from portfolio.models import PortfolioLog, Portfolio
 
 """
@@ -34,10 +32,8 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        file_path = os.path.join(BASE_DIR, 'res', 'files', 'account_asset_info_set.xlsx')
-        df = pd.read_excel(file_path)
         xlsx2model = namedtuple('Convert', 'model dataset')
-        for row in df.itertuples():
+        for row_dict in read_xlsx('account_asset_info_set.xlsx'):
             try:
                 row_dict = row._asdict()
                 stock_broker = {'name': row_dict.get('증권사')}

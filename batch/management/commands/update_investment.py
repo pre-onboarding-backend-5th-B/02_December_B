@@ -5,7 +5,7 @@ import pandas as pd
 from django.core.management import BaseCommand
 
 from account.models import Account
-from config.settings import BASE_DIR
+from batch.utils.read_xlsx import read_xlsx
 
 """
 insert assets 커맨드가 미리 실행된다고 가정한다.
@@ -24,10 +24,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        file_path = os.path.join(BASE_DIR, 'res', 'files', 'account_basic_info_set.xlsx')
-        df = pd.read_excel(file_path)
-        for row in df.itertuples():
-            row_dict = row._asdict()
+        for row_dict in read_xlsx('account_basic_info_set.xlsx'):
             number = row_dict.get('계좌번호')
             investment_principal = row_dict.get('투자원금')
             if None in [number, investment_principal]:
