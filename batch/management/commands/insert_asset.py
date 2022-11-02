@@ -35,7 +35,6 @@ class Command(BaseCommand):
         xlsx2model = namedtuple('Convert', 'model dataset')
         for row_dict in read_xlsx('account_asset_info_set.xlsx'):
             try:
-                row_dict = row._asdict()
                 stock_broker = {'name': row_dict.get('증권사')}
                 stock_company = {'isin': row_dict.get('ISIN')}
                 account = {
@@ -65,10 +64,12 @@ class Command(BaseCommand):
 
                 for x in dataset:
                     if x.model.objects.filter(**x.dataset).exists():
+                        print(f'{x.model} is exist')
                         continue
                     try:
                         instance = x.model(**x.dataset)
                         instance.save()
+                        print('success...')
                     except Exception as e:
                         logging.warning(e)
                         continue
