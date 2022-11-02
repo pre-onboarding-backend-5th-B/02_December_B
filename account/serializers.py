@@ -5,5 +5,5 @@ from .models import Account
 
 class InvestmentListSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Account
+        model = Account
         fields = ["name", "number", "investment_principal", "total_asset"]

@@ -38,6 +38,7 @@ urlpatterns = [
     path("order/", include("order.urls")),
     path("company/", include("company.urls")),
     path("portfolio/", include("portfolio.urls")),
+    path("api-auth/", include("rest_framework.urls")),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
