@@ -10,7 +10,6 @@ class TransferSerializer(serializers.ModelSerializer):
         fields = ['id', 'account', 'price', 'status']
         extra_kwargs = {
             'price': {
-                'validators': [MinValueValidator(0)],
                 'required': True,
                 'allow_null': False
             },
