@@ -16,9 +16,8 @@ class Transfer(models.Model):
         (SUCCESS, 'success'),  # phase 2 까지 통과하여 송금이 성공한 상태
     ]
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    price = models.IntegerField(validators=[MinValueValidator(0)],
-                                default=0,
-                                help_text='송금액')
+    price = models.IntegerField(validators=[MinValueValidator(100)],
+                                help_text='송금은 최소 100원 이상을 보내주세요')
     status = models.CharField(
         max_length=1,
         choices=TRANSFER_STATUS,
