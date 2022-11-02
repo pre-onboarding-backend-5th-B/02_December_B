@@ -9,7 +9,6 @@ from transfer.serializers import TransferSerializer, TransferDetailSerializer
 from transfer.utils import get_hashing
 
 
-# Create your views here.
 class TransferViewSet(viewsets.ModelViewSet):
     queryset = Transfer.objects.all()
     serializer_class = TransferSerializer
