@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from .models import Account
+
+
+class InvestmentListAPIView(ListAPIView):
+    queryset = Account.objects.all()
+    serializer_class = InvestmentListSerializer
