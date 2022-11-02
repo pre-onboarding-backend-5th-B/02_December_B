@@ -1,5 +1,7 @@
 from rest_framework.generics import ListAPIView
 
+from .serializers import InvestmentListSerializer
+
 from .models import Account
 
 
