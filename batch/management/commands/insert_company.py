@@ -1,12 +1,9 @@
 import logging
-import os
 
-import pandas as pd
 from django.core.management import BaseCommand
 
 from batch.utils.read_xlsx import read_xlsx
 from company.models import StockCompany
-from config.settings import BASE_DIR
 
 """
 우선적으로 실행되어야 함
@@ -18,6 +15,7 @@ class Command(BaseCommand):
     asset_group_info_set.xlsx 파일을 읽어들여
     StockCompany 에 insert 한다.
     """
+
     def add_arguments(self, parser):
         pass
 
@@ -32,9 +30,11 @@ class Command(BaseCommand):
                 continue
             try:
                 if StockCompany.objects.filter(isin=di['isin']).exists():
+                    print(f'StockCompany {di["isin"]} is exist')
                     continue
                 scmpy = StockCompany(**di)
                 scmpy.save()
+                print('success...')
             except Exception as e:
                 logging.warning(e)
                 pass

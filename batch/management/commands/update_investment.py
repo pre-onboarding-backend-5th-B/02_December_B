@@ -1,7 +1,5 @@
 import logging
-import os
 
-import pandas as pd
 from django.core.management import BaseCommand
 
 from account.models import Account
@@ -28,12 +26,14 @@ class Command(BaseCommand):
             number = row_dict.get('계좌번호')
             investment_principal = row_dict.get('투자원금')
             if None in [number, investment_principal]:
+                print(f'Account {number} is exist')
                 continue
             try:
                 Account.objects.update_or_create(
                     number=number,
                     defaults={'investment_principal': investment_principal}
                 )
+                print('success...')
             except Exception as e:
                 logging.warning(e)
                 continue
