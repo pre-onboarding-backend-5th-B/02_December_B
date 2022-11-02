@@ -6,4 +6,10 @@ from .models import Account
 class InvestmentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ["name", "number", "investment_principal", "total_asset"]
+        fields = ["name", "stock_broker", "number", "total_asset"]
+
+
+class InvestmentDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ["name", "stock_broker", "number", "total_asset", "investment_principal"]
