@@ -1,4 +1,4 @@
-import hashlib
+import logging
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -19,15 +19,21 @@ class TransferViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        account = Account.objects.get(pk=request.POST.get('account'))
-        price = request.POST.get('price')
-        hashing = get_hashing(account, price)
-        transfer_id = serializer.data['id']
-        message = {
-            'signature': hashing,
-            'transfer_id': transfer_id
-        }
-        return Response(message, status=status.HTTP_201_CREATED)
+        try:
+            account = Account.objects.get(pk=request.POST.get('account'))
+        except Exception as e:
+            logging.warning(e)
+            return Response({'message': '계좌 id 를 확인하세요.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        else:
+            price = request.POST.get('price')
+            hashing = get_hashing(account, price)
+            transfer_id = serializer.data['id']
+            message = {
+                'signature': hashing,
+                'transfer_id': transfer_id
+            }
+            return Response(message, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         # phase 2 를 진행함 pending 에서 success 로 바꾸므로 update 라고 판단
