@@ -1,4 +1,6 @@
+import hashlib
 import logging
+import os
 from collections import namedtuple
 
 from django.core.management import BaseCommand
@@ -6,6 +8,7 @@ from django.core.management import BaseCommand
 from account.models import Account
 from batch.utils.read_xlsx import read_xlsx
 from company.models import StockBroker, StockCompany
+from config.settings import BASE_DIR
 from portfolio.models import PortfolioLog, Portfolio
 
 """
@@ -32,8 +35,11 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        file_nm = 'account_asset_info_set.xlsx'
+        mtime = os.path.getmtime(os.path.join(BASE_DIR, 'res', 'files', file_nm))  # 파일 수정시간을 확인해서 배치파일이 변한지 확인한다.
+        hashtime = hashlib.sha512(bytes(str(mtime), 'utf-8')).hexdigest()
         xlsx2model = namedtuple('Convert', 'model dataset')
-        for row_dict in read_xlsx('account_asset_info_set.xlsx'):
+        for row_dict in read_xlsx(file_nm):
             try:
                 stock_broker = {'name': row_dict.get('증권사')}
                 stock_company = {'isin': row_dict.get('ISIN')}
@@ -45,12 +51,13 @@ class Command(BaseCommand):
                 }
                 portfolio = {
                     'account': Account.objects.get_or_create(**account)[0],
-                    'stock_company': StockCompany.objects.get_or_create(**stock_company)[0],
                 }
                 portfolio_log = {
                     'portfolio': Portfolio.objects.get_or_create(**portfolio)[0],
+                    'stock_company': StockCompany.objects.get_or_create(**stock_company)[0],
                     'price': row_dict.get('현재가'),
-                    'amount': row_dict.get('보유수량')
+                    'amount': row_dict.get('보유수량'),
+                    'file_mtime_hashing': hashtime
                 }
             except Exception as e:
                 logging.warning(e)
