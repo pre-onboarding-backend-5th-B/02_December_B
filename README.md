@@ -65,9 +65,9 @@
 ### batch 명령어
 
 ```shell
-(env)$project_dir>python manage.py insert_company
-(env)$project_dir>python manage.py insert_asset
-(env)$project_dir>python manage.py insert_investment
+(env)$project_dir>python manage.py insert_company     # 우선 실행
+(env)$project_dir>python manage.py insert_asset       # 그 다음 실행
+(env)$project_dir>python manage.py update_investment  # 마지막 실행
 ```
 
 <details>
