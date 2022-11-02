@@ -10,7 +10,7 @@ class Portfolio(models.Model):
     보유 종목
     """
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    stock_company = models.ForeignKey(StockCompany, on_delete=models.CASCADE)
+    
 
 
 class PortfolioLog(models.Model):
@@ -18,6 +18,7 @@ class PortfolioLog(models.Model):
     종목별 매수 기록
     """
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    stock_company = models.ForeignKey(StockCompany, on_delete=models.CASCADE)
     price = models.IntegerField(validators=[MinValueValidator(0)],
                                 default=0,
                                 help_text='매수 당시 가격')
