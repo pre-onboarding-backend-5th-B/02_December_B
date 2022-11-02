@@ -95,6 +95,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# CRON JOB
 CRONJOBS = [
     ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {},
      f'>> {BASE_DIR}/log/insert_company 2>&1'),
