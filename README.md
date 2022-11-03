@@ -140,5 +140,58 @@
 </details>
 
 ## API 목록
-
-![image](https://user-images.githubusercontent.com/44486924/198943397-983908a5-99cc-4bad-9c28-d5a2ca6753db.png)
+### Transfer - 송금 기능
+1. `GET` /transfer
+   - 송금 목록을 조회 한다.
+2. `POST` /transfer
+   - **절차 1**을 실행한다
+     - 절차 1은 송금을 보내기 전 유효한 요청인 지 판단한다.
+     - 요청 데이터로는 `계좌 id`와 `금액` 이 있다.
+   - request 
+     ```json
+     {
+        "account": "1",
+        "price": "1000"  // 100 보다는 큰 금액을 보내야 함 
+     }
+     ```
+   - response
+     - 201
+       ```json
+       {
+          "signature": "30300f183f336e340bcfbd99c5545724ab3bc262aa70368a33f059c901d601e3",
+          "transfer_id": 23
+       }
+       ```
+     - 400 
+       ```json
+       {
+         "price": [
+             "Ensure this value is greater than or equal to 100."
+          ]
+       }
+       ```
+3. `GET` /transfer/:id
+   - 송금과 관련된 시그니처와 송금 상태를 확인할 수 있다. 
+     - `P` 는 절차 1를 통과했지만 송금이 완료되지는 않은 상태이다.
+     - `S` 는 송금이 완료된 상태이다.
+4. `PATCH` /transfer/:id 
+  - 송금을 보내는 요청이다.
+  - request
+    ```json
+    {
+      "signature": "30300f183f336e340bcfbd99c5545724ab3bc262aa70368a33f059c901d601e3",
+    }
+    ```
+  - response:
+    - 200
+      ```json
+      {
+        "status": "S" // 완료된 상태
+      }
+      ```
+    - 400
+      ```json
+      {
+        "message": "transfer id 를 확인하세요"
+      }
+      ```
