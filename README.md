@@ -48,7 +48,7 @@
   ```
   - **cron 보기**
   ```shell
-  (env)$project_dir>python manage.py crontab remove  # cron 삭제
+  (env)$project_dir>python manage.py crontab show  # cron 보기
   Currently active jobs in crontab:
   ... -> ('0 0 * * *', 'django.core.management.call_command', ['insert_company'], {}, '>> /$PROJECT_DIR/log/insert_company 2>&1')
   ... -> ('10 0 * * *', 'django.core.management.call_command', ['insert_asset'], {}, '>> /$PROJECT_DIR/log/insert_asset 2>&1')
@@ -175,7 +175,7 @@
      - `P` 는 절차 1를 통과했지만 송금이 완료되지는 않은 상태이다.
      - `S` 는 송금이 완료된 상태이다.
 4. `PATCH` /transfer/:id 
-  - 송금을 보내는 요청이다.
+  - **절차 2**에 해당하며 **절차 1** 에서 유효성 검사를 통과한 뒤 송금절차를 마무리하는 요청이다.
   - request
     ```json
     {
