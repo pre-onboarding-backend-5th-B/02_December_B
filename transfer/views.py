@@ -37,7 +37,12 @@ class TransferViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         # phase 2 를 진행함 pending 에서 success 로 바꾸므로 update 라고 판단
         request_sig = request.POST.get('signature')
-        queryset = Transfer.objects.get(pk=kwargs['pk'])
+        try:
+            queryset = Transfer.objects.get(pk=kwargs['pk'])
+        except Exception as e:
+            logging.warning(e)
+            return Response({'message': 'transfer id 를 확인하세요'},
+                            status=status.HTTP_400_BAD_REQUEST)
         server_sig = get_hashing(queryset.account, queryset.price)
         if request_sig == server_sig:
             queryset.status = Transfer.SUCCESS
